@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/css/ol.css" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+
+
+/* Style tab links */
+
+.header {
+  padding: 10px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 10px;
+}
+.tablink {
+  background-color: black;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 33%;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 900px; /* Should be removed. Only for demonstration */
+}
+
+.row {
+  float: right;
+  width: 50%;
+  padding: 10px;
+  height: 900px; /* Should be removed. Only for demonstration */
+}
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 100%;
+}
+.tabcontent1 {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+ background-color: #4CAF50;
+  border: 10px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.tabcontent {
+  color: Blue;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+  width: 100%;
+  border: 50px;
+}
+.tablink:hover {
+  background-color: red;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.label
+{
+  margin-top: 5%;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 0%;
+  padding: 2.5%;
+  padding-bottom: 0.5%;
+}
+
+.label1
+{
+  margin: 3%;
+  padding: 2.5%;
+}
+
+
+</style>
+ <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js"></script>
+<link rel="stylesheet" type="text/css" href="C:\Users\Aditi\Desktop\pro\v6.2.1-dist\ol.css">
+ <!--<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script> -->
+
+</head>
+<body>
+  <script type="C:\Users\Aditi\Desktop\pro\v6.2.1-dist/ol.js"></script>
+  <script type="C:\Users\Aditi\Desktop\pro\open.js"></script>
+<div class="header">
+
+<h1>GNR 629</h1>
+</div>
+
+<div class="column">
+  
+
+   <div class = "tab">
+  <button class="tablinks" onclick="openCity(event, 'London')">WMS</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">WCS</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">WFS</button>
+</div>
+<div id="London" class="tabcontent1">
+      <form>  
+   <fieldset>  
+        <legend>WMS Service</legend>  
+        <label>Enter URL for GetCapability</label><br>  
+        <input type="text"  name="name" id="getURL" style="width:80%;" >
+        &nbsp;<input type="button" value="Submit Request" onclick="loadDoc();">
+        <br>  
+          <label for="WmsRequest" class = "label">
+                  Request:
+                </label>
+                <select id="WmsRequest" class = "label1">
+                  <option value="0">
+                    None
+                  </option>
+                </select>
+                <br>
+
+           <label for="WmsLayer" class = "label">
+                  Layers:
+                </label>
+                <select id="WmsLayer" class = "label1" onfocus="removecolor()" onblur="makeRequestForCoordinateSystems()"  >
+                  <option value="0">
+                    None
+                  </option>
+
+                </select>
+                  <br>
+                <label for="WmsCrs" class = "label">
+                  Coordinate Reference System:
+                </label>
+                <select id="WmsCrs"  class = "label1">
+                  <option value="0">
+                    None
+                  </option>
+                </select>
+             
+        <br>
+            <label id="min_X_label" for="min_X" class = "label">
+              min_X: 
+            </label>
+            <input type="text" id="min_X" size="4">
+            
+            <label id="min_X_label" for="max_X" class = "label">
+              max_X:
+            </label>
+            <input type="text" id="max_X" size="4">
+            <br>
+            <br>
+            <label id="min_X_label" for="min_Y" class = "label">
+              min_Y: 
+            </label>
+            <input type="text" id="min_Y" size="4">
+            
+            <label id="min_X_label" for="max_Y" class = "label">
+              max_Y:
+            </label>
+            <input type="text" id="max_Y" size="4">
+            
+            <br>
+
+
+              <br>
+            <label id="width_label" for="width" class = "label">
+              Width: 
+            </label>
+            <input type="text" id="width" size="4">
+            
+            <label id="height_label" for="height" class = "label">
+              Height:
+            </label>
+            <input type="text" id="height" size="4">
+            <br>
+            <br>
+              <label for="format_label" class = "label">
+                  Format:
+                </label>
+                <select id="format"  class = "label1">
+                  <option value="0">
+                    None
+                  </option>
+                </select>
+              
+
+          <br>XML Response:<br>  
+        <textarea id = "responseTextArea1" style="width:90%;" rows = 15></textarea>
+        <br>
+         <input type="submit" value="Submit" onclick="onclickmap()" > 
+     </fieldset>  
+  </form>
+
+</div>
+
+<div class= "row" id ="map1" >
+</div>
+
+
+
+
+<div id="Paris" class="tabcontent1">
+  <h3>Paris</h3>
+  <p>WCS Working.</p> 
+</div>
+
+<div id="Tokyo" class="tabcontent1">
+  <h3>Tokyo</h3>
+  <p>WFS Working.</p>
+</div>
+</div>
+
+
+
+
+
+  
+  <div class="column" id="map" style="background-color:#bbb;">
+    </div>
+   <script type="text/javascript">
+     var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({ 
+          center: ol.proj.fromLonLat([37.41, 8.82]),
+          zoom: 4
+        })
+      });
+
+
+
+
+
+     function onclickmap()
+     {
+      
+  location.replace("http://localhost:8080/gnr619/index1.html")
+}
+     
+
+
+    </script>
+
+    <script>
+       function onclickmap()
+     {
+      console.log("sucess")
+      var wms_source = new ol.source.TileWMS({
+ url: "https://ahocevar.com/geoserver/wms",
+ params: {
+          'LAYERS': 'topp:states'
+        },
+extent: [-117.861328,32.472695,-76.376953,47.398349],
+ratio: 1,
+serverType: 'geoserver'
+          });
+var wms_layer = new ol.layer.Tile({
+   source:  wms_source,
+     });
+
+var base_map = new ol.layer.Tile({
+  source: new ol.source.OSM(),
+  visible: true,
+  title: 'OSMStandard'
+});
+
+    var layers = [
+    base_map,
+    wms_layer
+    ];
+
+    var vw=new ol.View({
+      center: [0, 0],
+      zoom: 1
+      });
+
+     map= new ol.Map({
+     target: 'map',
+     layers: layers,
+     view: vw
+     });
+     console.log("sucess")
+     }
+
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent1");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+
+<script>
+  document.getElementById("getURL").value = "http://localhost:8080/geoserver/wms?service=wms&version=1.1.1&request=GetCapabilities";
+  function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     document.getElementById("responseTextArea1").value = this.responseText;
+       myFunction(this);
+    }
+  };
+  xhttp.open("GET", "http://localhost:8080/geoserver/wms?service=wms&version=1.1.1&request=GetCapabilities", true);
+  xhttp.send();
+}
+function myFunction(xmlDocument) {
+
+  var responseParser=new DOMParser();
+        var xmlDoc=responseParser.parseFromString(xmlDocument.responseText,"application/xml");
+        var noOfRequests=xmlDoc.getElementsByTagName("Request")[0].childElementCount;
+        console.log(noOfRequests);
+        for(var i=0;i<noOfRequests*2;i++){
+          var temp=document.getElementById("request");
+          var newOption=document.createElement("option");
+          if(xmlDoc.getElementsByTagName("Request")[0].childNodes[i].tagName!=undefined){
+            newOption.text=xmlDoc.getElementsByTagName("Request")[0].childNodes[i].tagName;
+            newOption.value=xmlDoc.getElementsByTagName("Request")[0].childNodes[i].tagName;
+            var select=document.getElementById("WmsRequest");
+
+            select.appendChild(newOption);
+
+          }
+        }
+
+     var noOfLayers=xmlDoc.getElementsByTagName("Layer").length;
+        console.log(noOfLayers)
+        var layers=xmlDoc.getElementsByTagName("Layer");
+        for(var i=3;i<noOfLayers;i++){
+          var newOption=document.createElement("option");
+          if(layers[i].tagName!=undefined){
+            newOption.text=layers[i].getElementsByTagName("Title")[0].innerHTML;
+            newOption.value=layers[i].getElementsByTagName("Title")[0].innerHTML;
+            var select=document.getElementById("WmsLayer");
+            select.appendChild(newOption);
+
+          }
+        }
+
+  
+}
+
+
+function removecolor()
+{
+var select = document.getElementById('WmsCrs');
+while (select.firstChild) {
+   select.removeChild(select.firstChild);
+}
+}
+    
+function makeRequestForCoordinateSystems(){
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+          if(this.readyState==4 && this.status==200){
+            getCoordinateSystem(this);
+            getBoundingBoxRequest(this);
+          }
+        };
+        xhttp.open("GET","http://localhost:8080/geoserver/wms?service=wms&version=1.1.1&request=GetCapabilities",true);
+        xhttp.send();
+      }
+      
+
+
+  function getBoundingBoxRequest(xmlDocument){
+        var responseParser=new DOMParser();
+        var xmlDoc=responseParser.parseFromString(xmlDocument.responseText,"application/xml");
+        
+        var layerSelect=document.getElementById("WmsLayer");
+        console.log(layerSelect)
+        var selectedLayer=layerSelect.options[layerSelect.selectedIndex].value;
+        console.log(selectedLayer)
+        console.log("title of selectedLayer:"+selectedLayer);
+        var noOfLayers=xmlDoc.getElementsByTagName("Layer").length;
+        console.log(noOfLayers)
+        var layers=xmlDoc.getElementsByTagName("Layer");
+        var temp=0;
+        var min_Y=0;
+        var min_X=0;
+        var max_Y=0;
+        var max_X=0;
+        var WmsCrs="crs";
+        console.log("here3:getBoundingBoxRequest")
+        for(var i=0;i<noOfLayers;i++){
+          if(layers[i].tagName!=undefined){
+            if(layers[i].getElementsByTagName("Title")[0].innerHTML===selectedLayer){
+              temp=i;
+              WmsCrs=layers[temp].getElementsByTagName("BoundingBox")[0].getAttribute("SRS");
+             // format = layers[temp].getElementsByTagName("Format")[0].getAttribute("")
+              console.log(WmsCrs);
+              min_Y=layers[temp].getElementsByTagName("BoundingBox")[0].getAttribute("miny");
+              min_X=layers[temp].getElementsByTagName("BoundingBox")[0].getAttribute("minx");
+              max_Y=layers[temp].getElementsByTagName("BoundingBox")[0].getAttribute("maxy");
+              max_X=layers[temp].getElementsByTagName("BoundingBox")[0].getAttribute("maxx");
+             
+              console.log("min_X:"+min_X);
+              console.log("min_Y:"+min_Y);
+              console.log("max_X:"+max_X);
+              console.log("max_Y:"+max_Y);
+
+            }
+
+          }
+        }
+          document.getElementById("min_X").value=min_X;
+        document.getElementById("min_Y").value=min_Y;
+        document.getElementById("max_X").value=max_X;
+        document.getElementById("max_Y").value=max_Y;
+   for(var i=0;i<noOfLayers;i++){
+          if(layers[i].tagName!=undefined){
+            if(layers[i].getElementsByTagName("Title")[0].innerHTML===selectedLayer){
+              temp=i;
+            
+            
+              width=layers[temp].getElementsByTagName("LegendURL")[0].getAttribute("width");
+              height=layers[temp].getElementsByTagName("LegendURL")[0].getAttribute("height");
+           
+              
+
+            }
+
+          }
+        }
+
+
+        for(var i=0;i<noOfLayers;i++){
+          if(layers[i].tagName!=undefined){
+            if(layers[i].getElementsByTagName("Title")[0].innerHTML===selectedLayer){
+              temp=i;
+            
+            
+              format=layers[temp].getElementsByTagName("LegendURL")[0].getAttribute("width");
+              
+           
+              
+
+            }
+
+          }
+        }
+
+
+
+        document.getElementById("height").value=height;
+        document.getElementById("width").value=width;
+
+
+  var crs_input=document.getElementById("WmsCrs").options;
+        for(var i=0;i<crs_input.length;i++){
+          if(crs_input[i].value==WmsCrs){
+            document.getElementById("WmsCrs").value=WmsCrs;
+            console.log("crs:"+i);
+          }
+        }
+
+      
+      
+        var index=0;
+        var crs_input=document.getElementById("WmsCrs").options;
+        for(var i=0;i<crs_input.length;i++){
+          if(crs_input[i].value==WmsCrs){
+            document.getElementById("WmsCrs").value=WmsCrs;
+            console.log("crs:"+i);
+          }
+        }
+
+      }
+
+            function getCoordinateSystem(xmlDocument) {
+        var responseParser=new DOMParser();
+        var xmlDoc=responseParser.parseFromString(xmlDocument.responseText,"application/xml");
+        var layerSelect=document.getElementById("WmsLayer");
+        var selectedLayer=layerSelect.options[layerSelect.selectedIndex].value;
+        console.log(selectedLayer);
+        var noOfLayers=xmlDoc.getElementsByTagName("Layer").length;
+        console.log(noOfLayers)
+        var layers=xmlDoc.getElementsByTagName("Layer");
+        var temp=0;
+        for(var i=0;i<noOfLayers;i++){
+          var newOption=document.createElement("option");
+          if(layers[i].tagName!=undefined){
+            if(layers[i].getElementsByTagName("Title")[0].innerHTML===selectedLayer)
+              temp=i;
+             console.log("value of temp:"+temp);
+          }
+        }
+       
+        console.log(layers[temp].getElementsByTagName("Title")[0].innerHTML)
+        var srsOfSelectedLayer=layers[temp].getElementsByTagName("SRS");
+        console.log("no of srs:"+srsOfSelectedLayer.length);
+        for(var i=0;i<srsOfSelectedLayer.length;i++){
+          var newOption=document.createElement("option");
+          if(srsOfSelectedLayer[i].innerHTML!=undefined){
+            newOption.text=srsOfSelectedLayer[i].innerHTML;
+            newOption.value=srsOfSelectedLayer[i].innerHTML;
+            var select=document.getElementById("WmsCrs");
+            select.appendChild(newOption);
+
+          }
+        }
+      }
+
+
+
+
+</script>
+
+
+</body>
+</html>
